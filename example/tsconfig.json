@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-sqlite-storage": ["../src/index"],
+      "expo-sqlite-storage/*": ["../src/*"]
+    }
+  }
+}

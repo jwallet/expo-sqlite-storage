@@ -1,6 +1,6 @@
-# expo-sqlite
+# expo-sqlite-storage
 
-Implementation of the original expo-sqlite with an upgraded version of android.database.sqlite to use requery.sqlite-android which adds support for:
+Implementation of the original expo-sqlite with an upgraded version of android.database.sqlite to use [requery.sqlite-android](https://github.com/requery/sqlite-android) which adds support for:
 
 - JSON1 extension
 - Common Table expressions
@@ -20,13 +20,13 @@ For bare React Native projects, you must ensure that you have [installed and con
 ### Add the package to your npm dependencies
 
 ```
-npm install expo-sqlite-vooban
+npm install expo-sqlite-storage
 ```
 
 or
 
 ```
-yarn add expo-sqlite-vooban
+yarn add expo-sqlite-storage
 ```
 
 ### Configure for iOS
