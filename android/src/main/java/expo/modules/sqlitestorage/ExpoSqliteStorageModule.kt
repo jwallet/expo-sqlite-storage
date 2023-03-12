@@ -1,47 +1,191 @@
+// Copyright 2015-present 650 Industries. All rights reserved.
 package expo.modules.sqlitestorage
 
-import expo.modules.kotlin.modules.Module
-import expo.modules.kotlin.modules.ModuleDefinition
+import android.content.Context
+import android.database.Cursor
+import io.requery.android.database.sqlite.SQLiteDatabase
+import expo.modules.core.ExportedModule
+import expo.modules.core.Promise
+import expo.modules.core.interfaces.ExpoMethod
+import java.io.File
+import java.io.IOException
+import java.util.*
 
-class ExpoSqliteStorageModule : Module() {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
-  override fun definition() = ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('ExpoSqliteStorage')` in JavaScript.
-    Name("ExpoSqliteStorage")
+private val TAG = ExpoSqliteStorageModule::class.java.simpleName
+private val EMPTY_ROWS = arrayOf<Array<Any?>>()
+private val EMPTY_COLUMNS = arrayOf<String?>()
+private val EMPTY_RESULT = ExpoSqliteStorageModule.SQLitePluginResult(EMPTY_ROWS, EMPTY_COLUMNS, 0, 0, null)
+private val DATABASES: MutableMap<String, SQLiteDatabase?> = HashMap()
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants(
-      "PI" to Math.PI
-    )
+class ExpoSqliteStorageModule(private val mContext: Context) : ExportedModule(mContext) {
+  override fun getName(): String {
+    return "ExpoSqliteStorage"
+  }
 
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
-
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      "Hello world! 👋"
+  @ExpoMethod
+  fun exec(dbName: String, queries: ArrayList<ArrayList<Any>>, readOnly: Boolean, promise: Promise) {
+    try {
+      val db = getDatabase(dbName)
+      val results = queries.map { sqlQuery ->
+        val sql = sqlQuery[0] as String
+        val bindArgs = convertParamsToStringArray(sqlQuery[1] as ArrayList<Any?>)
+        try {
+          if (isSelect(sql)) {
+            doSelectInBackgroundAndPossiblyThrow(sql, bindArgs, db)
+          } else { // update/insert/delete
+            if (readOnly) {
+              SQLitePluginResult(EMPTY_ROWS, EMPTY_COLUMNS, 0, 0, ReadOnlyException())
+            } else {
+              doUpdateInBackgroundAndPossiblyThrow(sql, bindArgs, db)
+            }
+          }
+        } catch (e: Throwable) {
+          SQLitePluginResult(EMPTY_ROWS, EMPTY_COLUMNS, 0, 0, e)
+        }
+      }
+      val data = pluginResultsToPrimitiveData(results)
+      promise.resolve(data)
+    } catch (e: Exception) {
+      promise.reject("SQLiteError", e)
     }
+  }
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { value: String ->
-      // Send an event to JavaScript.
-      sendEvent("onChange", mapOf(
-        "value" to value
-      ))
+  @ExpoMethod
+  fun close(dbName: String, promise: Promise) {
+    DATABASES
+      .remove(dbName)
+      ?.close()
+    promise.resolve(null)
+  }
+
+  @ExpoMethod
+  fun deleteAsync(dbName: String, promise: Promise) {
+    val errorCode = "SQLiteError"
+    if (DATABASES.containsKey(dbName)) {
+      promise.reject(errorCode, "Unable to delete database '$dbName' that is currently open. Close it prior to deletion.")
     }
+    val dbFile = File(pathForDatabaseName(dbName))
+    if (!dbFile.exists()) {
+      promise.reject(errorCode, "Database '$dbName' not found")
+      return
+    }
+    if (!dbFile.delete()) {
+      promise.reject(errorCode, "Unable to delete the database file for '$dbName' database")
+      return
+    }
+    promise.resolve(null)
+  }
 
-    // Enables the module to be used as a native view. Definition components that are accepted as part of
-    // the view definition: Prop, Events.
-    View(ExpoSqliteStorageView::class) {
-      // Defines a setter for the `name` prop.
-      Prop("name") { view: ExpoSqliteStorageView, prop: String ->
-        println(prop)
+  private fun castToNonNullString(input: String?) : String {
+    if (input == null) {
+      throw IOException("This should never happen")
+    } else {
+      return input
+    }
+  }
+
+  // do a update/delete/insert operation
+  private fun doUpdateInBackgroundAndPossiblyThrow(
+    sql: String,
+    bindArgs: Array<String?>?,
+    db: SQLiteDatabase
+  ): SQLitePluginResult {
+    return db.compileStatement(sql).use { statement ->
+      if (bindArgs != null) {
+        for (i in bindArgs.size downTo 1) {
+          if (bindArgs[i - 1] == null) {
+            statement.bindNull(i)
+          } else {
+            val bindArg = castToNonNullString(bindArgs[i - 1])
+            statement.bindString(i, bindArg)
+          }
+        }
+      }
+      if (isInsert(sql)) {
+        val insertId = statement.executeInsert()
+        val rowsAffected = if (insertId >= 0) 1 else 0
+        SQLitePluginResult(EMPTY_ROWS, EMPTY_COLUMNS, rowsAffected, insertId, null)
+      } else if (isDelete(sql) || isUpdate(sql)) {
+        val rowsAffected = statement.executeUpdateDelete()
+        SQLitePluginResult(EMPTY_ROWS, EMPTY_COLUMNS, rowsAffected, 0, null)
+      } else {
+        // in this case, we don't need rowsAffected or insertId, so we can have a slight
+        // perf boost by just executing the query
+        statement.execute()
+        EMPTY_RESULT
       }
     }
   }
+
+  // do a select operation
+  private fun doSelectInBackgroundAndPossiblyThrow(
+    sql: String,
+    bindArgs: Array<String?>,
+    db: SQLiteDatabase
+  ): SQLitePluginResult {
+    return db.rawQuery(sql, bindArgs).use { cursor ->
+      val numRows = cursor.count
+      if (numRows == 0) {
+        return EMPTY_RESULT
+      }
+      val numColumns = cursor.columnCount
+      val columnNames = cursor.columnNames
+      val rows: Array<Array<Any?>> = Array(numRows) { arrayOfNulls(numColumns) }
+      var i = 0
+      while (cursor.moveToNext()) {
+        val row = rows[i]
+        for (j in 0 until numColumns) {
+          row[j] = getValueFromCursor(cursor, j, cursor.getType(j))
+        }
+        rows[i] = row
+        i++
+      }
+      SQLitePluginResult(rows, columnNames, 0, 0, null)
+    }
+  }
+
+  private fun getValueFromCursor(cursor: Cursor, index: Int, columnType: Int): Any? {
+    return when (columnType) {
+      Cursor.FIELD_TYPE_FLOAT -> cursor.getDouble(index)
+      Cursor.FIELD_TYPE_INTEGER -> cursor.getLong(index)
+      Cursor.FIELD_TYPE_BLOB ->
+        // convert byte[] to binary string; it's good enough, because
+        // WebSQL doesn't support blobs anyway
+        String(cursor.getBlob(index))
+      Cursor.FIELD_TYPE_STRING -> cursor.getString(index)
+      else -> null
+    }
+  }
+
+  @Throws(IOException::class)
+  private fun pathForDatabaseName(name: String): String {
+    val directory = File("${mContext.filesDir}${File.separator}SQLite")
+    ensureDirExists(directory)
+    return "$directory${File.separator}$name"
+  }
+
+  @Throws(IOException::class)
+  private fun getDatabase(name: String): SQLiteDatabase {
+    var database: SQLiteDatabase? = null
+    val path = pathForDatabaseName(name)
+    if (File(path).exists()) {
+      database = DATABASES[name]
+    }
+    if (database == null) {
+      DATABASES.remove(name)
+      database = SQLiteDatabase.openOrCreateDatabase(path, null)
+      DATABASES[name] = database
+    }
+    return database!!
+  }
+
+  internal class SQLitePluginResult(
+    val rows: Array<Array<Any?>>,
+    val columns: Array<String?>,
+    val rowsAffected: Int,
+    val insertId: Long,
+    val error: Throwable?
+  )
+
+  private class ReadOnlyException : Exception("could not prepare statement (23 not authorized)")
 }

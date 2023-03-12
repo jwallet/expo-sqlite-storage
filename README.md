@@ -1,6 +1,6 @@
 # expo-sqlite-storage
 
-Implementation of the original expo-sqlite with an upgraded version of android.database.sqlite to use [requery.sqlite-android](https://github.com/requery/sqlite-android) which adds support for:
+Implementation of the original expo-sqlite@11.0.0 with an upgraded version of android.database.sqlite to use [requery.sqlite-android](https://github.com/requery/sqlite-android) which adds support for:
 
 - JSON1 extension
 - Common Table expressions
@@ -8,6 +8,34 @@ Implementation of the original expo-sqlite with an upgraded version of android.d
 - Full Text Search 5
 - Generated Columns
 - DROP COLUMN support
+
+### RxDB Premium compatible
+
+It can be used with RxDB Premium SQLite plugin:
+
+```js
+import {
+  getRxStorageSQLite,
+  getSQLiteBasicsExpoSQLite,
+} from "rxdb-premium/plugins/storage-sqlite";
+import * as ExpoSqliteStorage from "expo-sqlite-storage";
+import { createRxDatabase } from "rxdb";
+
+const storage = getRxStorageSQLite({
+  sqliteBasics: getSQLiteBasicsExpoSQLite(ExpoSqliteStorage.openDatabase),
+});
+
+const db = await createRxDatabase({
+  name: storage.name,
+  storage,
+  multiInstance: false,
+  ignoreDuplicate: true,
+});
+```
+
+| iOS                                                  | Android                                                  |
+| :--------------------------------------------------- | :------------------------------------------------------- |
+| <img width="440" alt="image" src="./assets/ios.png"> | <img width="400" alt="image" src="./assets/android.png"> |
 
 # Installation in managed Expo projects
 

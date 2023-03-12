@@ -1,9 +1,0 @@
-{
-  "platforms": ["ios", "android", "web"],
-  "ios": {
-    "modules": ["ExpoSqliteStorageModule"]
-  },
-  "android": {
-    "modules": ["expo.modules.sqlitestorage.ExpoSqliteStorageModule"]
-  }
-}

@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
 
-group = 'expo.modules.sqlitestorage'
-version = '0.1.0'
+group = 'host.exp.exponent'
+version = '11.0.0'
 
 buildscript {
   def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
@@ -59,7 +59,7 @@ afterEvaluate {
 }
 
 android {
-  compileSdkVersion safeExtGet("compileSdkVersion", 31)
+  compileSdkVersion safeExtGet("compileSdkVersion", 33)
 
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_11
@@ -72,7 +72,7 @@ android {
 
   defaultConfig {
     minSdkVersion safeExtGet("minSdkVersion", 21)
-    targetSdkVersion safeExtGet("targetSdkVersion", 31)
+    targetSdkVersion safeExtGet("targetSdkVersion", 33)
     versionCode 1
     versionName "0.1.0"
   }
@@ -82,10 +82,13 @@ android {
 }
 
 repositories {
-  mavenCentral()
+  maven { url 'https://jitpack.io' }
 }
 
 dependencies {
   implementation project(':expo-modules-core')
+
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${getKotlinVersion()}"
+  implementation 'androidx.sqlite:sqlite:2.2.0'
+  implementation 'com.github.requery:sqlite-android:3.39.2'
 }

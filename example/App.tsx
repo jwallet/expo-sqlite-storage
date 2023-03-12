@@ -1,20 +1,25 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from "react";
 
-import * as ExpoSqliteStorage from 'expo-sqlite-storage';
+import Heroes from "./Heroes";
+import { AppContext } from "./context";
+import initializeDb from "./initializeDb";
 
-export default function App() {
+export const App = () => {
+  const [db, setDb] = useState<any>(null);
+
+  useEffect(() => {
+    const initDB = async () => {
+      const _db = await initializeDb();
+      if (_db) setDb(_db);
+    };
+    initDB().then();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>{ExpoSqliteStorage.hello()}</Text>
-    </View>
+    <AppContext.Provider value={{ db }}>
+      <Heroes />
+    </AppContext.Provider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

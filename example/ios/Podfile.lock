@@ -17,7 +17,7 @@ PODS:
     - React-Core
     - React-RCTAppDelegate
     - ReactCommon/turbomodule/core
-  - ExpoSqliteStorage (0.1.0):
+  - EXSQLite (0.1.0):
     - ExpoModulesCore
   - FBLazyVector (0.71.3)
   - FBReactNativeSpec (0.71.3):
@@ -380,7 +380,7 @@ DEPENDENCIES:
   - Expo (from `../node_modules/expo`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
-  - ExpoSqliteStorage (from `../../ios`)
+  - EXSQLite (from `../../ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
@@ -440,7 +440,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-keep-awake/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core"
-  ExpoSqliteStorage:
+  EXSQLite:
     :path: "../../ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
@@ -517,7 +517,7 @@ SPEC CHECKSUMS:
   Expo: 04ba1ddde0be07aff4306ae636a1804810679145
   ExpoKeepAwake: 69f5f627670d62318410392d03e0b5db0f85759a
   ExpoModulesCore: 1667335d4f4c9b7801990930e6f0eea42c916a21
-  ExpoSqliteStorage: 984f0c3fe955b509c9a64aa6b24e0610a7080d78
+  EXSQLite: eb942980352e0a55bf0291ecfb8eac6705af1d0f
   FBLazyVector: 60195509584153283780abdac5569feffb8f08cc
   FBReactNativeSpec: 9c191fb58d06dc05ab5559a5505fc32139e9e4a2
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
