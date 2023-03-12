@@ -1,6 +1,6 @@
-# expo-sqlite-storage
+# Expo SQLite Storage
 
-Implementation of the original expo-sqlite@11.0.0 with an upgraded version of android.database.sqlite to use [requery.sqlite-android](https://github.com/requery/sqlite-android) which adds support for:
+Implements the original [expo-sqlite@11.1.1](https://github.com/expo/expo/tree/main/packages/expo-sqlite) with an updated version of android.database.sqlite from [requery.sqlite-android@3.39.2](https://github.com/requery/sqlite-android) which adds support for:
 
 - JSON1 extension
 - Common Table expressions
@@ -11,7 +11,7 @@ Implementation of the original expo-sqlite@11.0.0 with an upgraded version of an
 
 ### RxDB Premium compatible
 
-It can be used with RxDB Premium SQLite plugin:
+It's compatible with [RxDB](github.com/pubkey/rxdb) Premium [SQLite](https://rxdb.info/rx-storage-sqlite.html) storage:
 
 ```js
 import {

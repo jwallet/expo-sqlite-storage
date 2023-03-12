@@ -5,7 +5,7 @@ import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 
 import heroSchema from "./schema";
-import { storage } from "./storage";
+import { getStorage } from "./storage";
 
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBUpdatePlugin);
@@ -28,7 +28,7 @@ const initialize = async () => {
     console.log("Initializing database...");
     db = await createRxDatabase({
       name: dbName,
-      storage,
+      storage: getStorage("sqlite"),
       multiInstance: false,
       ignoreDuplicate: true,
     });
