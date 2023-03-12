@@ -32,14 +32,15 @@
     "preset": "expo-module-scripts"
   },
   "dependencies": {
-    "@expo/websql": "^1.0.1",
+    "@expo/websql": "^1.0.1"
+  },
+  "devDependencies": {
+    "expo-module-scripts": "^3.0.0",
     "expo": "^47.0.0",
     "react-native": "0.70.5"
   },
-  "devDependencies": {
-    "expo-module-scripts": "^3.0.0"
-  },
   "peerDependencies": {
-    "expo": "*"
+    "expo": "*",
+    "react-native": "*"
   }
 }
