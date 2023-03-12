@@ -1,7 +1,7 @@
 {
   "name": "expo-sqlite-storage",
   "version": "0.1.0",
-  "description": "Expo SQLite default module with an up to date android sqlite database",
+  "description": "Expo SQLite default module with an updated android sqlite database.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "sideEffects": false,
@@ -19,13 +19,15 @@
     "expo",
     "sqlite",
     "websql",
-    "sql"
+    "sql",
+    "rxdb",
+    "json"
   ],
-  "repository": "https://github.com/vooban/expo-sqlite-storage",
+  "repository": "https://github.com/jwallet/expo-sqlite-storage",
   "bugs": {
     "url": "https://github.com/expo/expo/issues"
   },
-  "author": "650 Industries, Inc., jose ouellet <jose.ouellet@vooban.com> (https://github.com/jwallet)",
+  "author": "650 Industries, Inc.",
   "license": "MIT",
   "homepage": "https://docs.expo.dev/versions/latest/sdk/sqlite/",
   "jest": {

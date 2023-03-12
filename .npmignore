@@ -8,3 +8,6 @@ __tests__
 /android/src/androidTest/
 /android/src/test/
 /example/
+
+**/node_modules/**
+.idea/
