@@ -11,7 +11,7 @@ Implements the original [expo-sqlite@11.1.1](https://github.com/expo/expo/tree/m
 
 ### RxDB Premium compatible
 
-It's compatible with [RxDB](github.com/pubkey/rxdb) Premium [SQLite](https://rxdb.info/rx-storage-sqlite.html) storage:
+It's compatible with [RxDB](https://github.com/pubkey/rxdb) Premium [SQLite](https://rxdb.info/rx-storage-sqlite.html) storage:
 
 ```js
 import {
