@@ -42,7 +42,7 @@ const db = await createRxDatabase({
 For [managed](https://docs.expo.dev/versions/latest/introduction/managed-vs-bare/) Expo projects, please follow the installation instructions in the [API documentation for the latest stable release](#api-documentation). If you follow the link and there is no documentation available then this library is not yet usable within managed projects &mdash; it is likely to be included in an upcoming Expo SDK release.
 
 ## Error
-#### {"name":"TypeError","message":"null is not an object (evaluating 'ExpoSqliteStorage.exec')
+#### {"name":"TypeError","message":"null is not an object (evaluating 'SQLiteDatabase.exec')
 
 You are probably running expo without rebuilding your app, this comes with preloaded expo libs to reduce the build time. You need to rebuild your android and iOS apps in order to fix the lib. If you see the expo splash screen before your app opens and you get the error above, you probably need to do that:
 
