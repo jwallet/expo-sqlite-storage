@@ -57,6 +57,23 @@ or
 yarn add expo-sqlite-storage
 ```
 
+then rebuild your app.
+
+```
+npx expo run:android|ios
+```
+
+### Error 
+#### {"name":"TypeError","message":"null is not an object (evaluating 'ExpoSqliteStorage.exec')
+
+You are probably running expo without rebuilding your app, this comes with preloaded expo libs to reduce the build time. You need to rebuild your android and iOS apps in order to fix the lib. If you see the expo splash screen before your app opens and you get the error above, you probably need to do that:
+
+1. delete your `node_modules/`
+2. delete your `android/` and/or `ios/` folder
+3. run `npx expo run:android` and/or `npx expo run:ios`
+4. after building it, you can make changes to your JS, using `npm expo start`. 
+
+
 ### Configure for iOS
 
 React-Native above 0.60:
