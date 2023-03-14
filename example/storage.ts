@@ -1,10 +1,10 @@
-import * as ExpoSqliteStorage from "expo-sqlite-storage";
-import { RxStorage } from "rxdb";
-import { getRxStorageMemory } from "rxdb/plugins/storage-memory";
 import {
   getRxStorageSQLite,
   getSQLiteBasicsExpoSQLite,
-} from "rxdb-premium/plugins/storage-sqlite";
+} from "@guay/rxdb-premium/plugins/storage-sqlite";
+import * as ExpoSqliteStorage from "expo-sqlite-storage";
+import { RxStorage } from "rxdb";
+import { getRxStorageMemory } from "rxdb/plugins/storage-memory";
 
 export const getStorage = (type: "memory" | "sqlite"): RxStorage<any, any> => {
   switch (type) {

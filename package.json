@@ -1,7 +1,7 @@
 {
-  "name": "expo-sqlite-storage",
-  "version": "0.1.0",
-  "description": "Expo SQLite default module with an updated android sqlite database.",
+  "name": "@guay/expo-sqlite-storage",
+  "version": "0.1.10",
+  "description": "Expo SQLite default database that can be queried through a WebSQL-like API with an updated android sqlite database to support JSON extension.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "sideEffects": false,
@@ -30,13 +30,11 @@
   "author": "650 Industries, Inc.",
   "license": "MIT",
   "homepage": "https://docs.expo.dev/versions/latest/sdk/sqlite/",
-  "jest": {
-    "preset": "expo-module-scripts"
-  },
   "dependencies": {
     "@expo/websql": "^1.0.1"
   },
   "devDependencies": {
+    "@expo/config-plugins": "^6.0.1",
     "expo-module-scripts": "^3.0.0",
     "expo": "^47.0.0",
     "react-native": "0.70.5"
@@ -44,5 +42,10 @@
   "peerDependencies": {
     "expo": "*",
     "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
   }
 }

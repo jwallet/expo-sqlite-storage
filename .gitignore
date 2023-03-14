@@ -9,7 +9,6 @@ jsconfig.json
 # Xcode
 #
 build/
-standalone/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -37,6 +36,7 @@ project.xcworkspace
 .settings
 local.properties
 android.iml
+standalone/
 
 # Cocoapods
 #
@@ -51,6 +51,7 @@ node_modules/
 npm-debug.log
 yarn-debug.log
 yarn-error.log
+.npmrc
 
 # BUCK
 buck-out/

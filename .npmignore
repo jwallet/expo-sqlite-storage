@@ -11,5 +11,5 @@ __tests__
 /standalone/
 /assets/
 
-**/node_modules/**
 .idea/
+.npmrc

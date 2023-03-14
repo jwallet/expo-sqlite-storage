@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "preset": "jest-expo",
+  "coveragePathIgnorePatterns": ["/src/*.d.ts"],
+  "moduleFileExtensions": ["ts", "js"]
+}
