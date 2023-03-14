@@ -9,6 +9,9 @@ Implements the original [expo-sqlite@11.1.1](https://github.com/expo/expo/tree/m
 - Generated Columns
 - DROP COLUMN support
 
+
+This cannot be used in Expo GO, see the related [error](#error) section.
+
 ### RxDB Premium compatible
 
 It's compatible with [RxDB](https://github.com/pubkey/rxdb) Premium [SQLite](https://rxdb.info/rx-storage-sqlite.html) storage:
@@ -67,7 +70,7 @@ npx expo start --dev-client
 
 #### {"name":"TypeError","message":"null is not an object (evaluating 'SQLiteDatabase.exec')
 
-Will not work inside **Expo GO**.
+Will not work inside **Expo GO** until the Expo team [updates their SQLite database](https://expo.canny.io/feature-requests/p/expo-sqlite-ship-newer-sqlite3-version-on-android) to a more recent version.
 
 # Installation in bare React Native projects
 
@@ -85,11 +88,6 @@ or
 yarn add expo-sqlite-storage
 ```
 
-then rebuild your app.
-
-```
-npx expo run:android|ios
-```
 
 ### Configure for iOS
 
