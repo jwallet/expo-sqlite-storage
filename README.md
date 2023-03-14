@@ -11,7 +11,7 @@ Implements the original [expo-sqlite@11.1.1](https://github.com/expo/expo/tree/m
 
 ### RxDB Premium compatible
 
-It's compatible with [RxDB](github.com/pubkey/rxdb) Premium [SQLite](https://rxdb.info/rx-storage-sqlite.html) storage:
+It's compatible with [RxDB](https://github.com/pubkey/rxdb) Premium [SQLite](https://rxdb.info/rx-storage-sqlite.html) storage:
 
 ```js
 import {
@@ -41,6 +41,18 @@ const db = await createRxDatabase({
 
 For [managed](https://docs.expo.dev/versions/latest/introduction/managed-vs-bare/) Expo projects, please follow the installation instructions in the [API documentation for the latest stable release](#api-documentation). If you follow the link and there is no documentation available then this library is not yet usable within managed projects &mdash; it is likely to be included in an upcoming Expo SDK release.
 
+## Error
+#### {"name":"TypeError","message":"null is not an object (evaluating 'SQLiteDatabase.exec')
+
+You are probably running expo without rebuilding your app, this comes with preloaded expo libs to reduce the build time. You need to rebuild your android and iOS apps in order to fix the lib. If you see the expo splash screen before your app opens and you get the error above, you probably need to do that:
+
+1. delete your `node_modules/`
+2. delete your `android/` and/or `ios/` folder
+3. run `npx expo run:android` and/or `npx expo run:ios`
+4. after building it, you can make changes to your JS, using `npm expo start`. 
+
+
+
 # Installation in bare React Native projects
 
 For bare React Native projects, you must ensure that you have [installed and configured the `expo` package](https://docs.expo.dev/bare/installing-expo-modules/) before continuing.
@@ -55,6 +67,12 @@ or
 
 ```
 yarn add expo-sqlite-storage
+```
+
+then rebuild your app.
+
+```
+npx expo run:android|ios
 ```
 
 ### Configure for iOS
