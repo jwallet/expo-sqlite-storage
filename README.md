@@ -1,4 +1,9 @@
 # Expo SQLite Storage
+![ios](https://img.shields.io/badge/ios-%E2%9C%94%EF%B8%8F-white)
+![android](https://img.shields.io/badge/android-%E2%9C%94%EF%B8%8F-white)
+![web](https://img.shields.io/badge/web-%E2%9D%8C-white)
+![expo](https://img.shields.io/badge/expo-%E2%9C%94%EF%B8%8F-white)
+![expo go](https://img.shields.io/badge/expo%20go-%E2%9D%8C-white)
 
 Implements the original [expo-sqlite@11.1.1](https://github.com/expo/expo/tree/main/packages/expo-sqlite) with an updated version of android.database.sqlite from [requery.sqlite-android@3.39.2](https://github.com/requery/sqlite-android) which adds support for:
 
