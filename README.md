@@ -1,11 +1,12 @@
 # Expo SQLite Storage
+
 [![ios](https://img.shields.io/badge/ios-%E2%9C%94%EF%B8%8F-white)](#)
 [![android](https://img.shields.io/badge/android-%E2%9C%94%EF%B8%8F-white)](#)
 [![web](https://img.shields.io/badge/web-%E2%9D%8C-white)](#)
 [![expo](https://img.shields.io/badge/expo-%E2%9C%94%EF%B8%8F-white)](#)
 [![expo go](https://img.shields.io/badge/expo%20go-%E2%9D%8C-white)](#)
 [![expo-sqlite](https://img.shields.io/badge/expo/expo--sqlite-11.1.1-black)](https://github.com/expo/expo/tree/main/packages/expo-sqlite)
-[![sqlite-android](https://img.shields.io/badge/requery/sqlite--android-3.39.2-black)](https://github.com/requery/sqlite-android)
+[![sqlite-android](https://img.shields.io/badge/requery/sqlite--android-3.41.1-black)](https://github.com/requery/sqlite-android)
 
 Implements the original [expo-sqlite](https://github.com/expo/expo/tree/main/packages/expo-sqlite) with an updated version of android.database.sqlite from [requery.sqlite-android](https://github.com/requery/sqlite-android) which adds support for:
 
@@ -15,7 +16,6 @@ Implements the original [expo-sqlite](https://github.com/expo/expo/tree/main/pac
 - Full Text Search 5
 - Generated Columns
 - DROP COLUMN support
-
 
 This cannot be used in Expo GO, see the related [error](#error) section.
 
@@ -94,7 +94,6 @@ or
 ```
 yarn add expo-sqlite-storage
 ```
-
 
 ### Configure for iOS
 

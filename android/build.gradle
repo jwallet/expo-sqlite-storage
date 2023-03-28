@@ -90,5 +90,5 @@ dependencies {
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${getKotlinVersion()}"
   implementation 'androidx.sqlite:sqlite:2.2.0'
-  implementation 'com.github.requery:sqlite-android:3.39.2'
+  implementation 'com.github.requery:sqlite-android:3.41.1'
 }

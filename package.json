@@ -1,6 +1,6 @@
 {
   "name": "expo-sqlite-storage",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Expo SQLite default database that can be queried through a WebSQL-like API with an updated android sqlite database to support JSON extension, compatible with RxDB.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
