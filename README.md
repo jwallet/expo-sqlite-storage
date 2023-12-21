@@ -10,7 +10,7 @@
 
 
 > [!IMPORTANT]
-> This package will become useless once Expo SDK 50 is released.
+> This package will become useless once Expo SDK 50 will be released.
 > The new SDK introduces changes to their official `expo-sqlite` and they upgraded to a more recent SQLite version that will support JSON function such as `json_extract`.
 
 
