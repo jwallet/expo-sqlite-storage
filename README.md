@@ -8,6 +8,12 @@
 [![expo-sqlite](https://img.shields.io/badge/expo/expo--sqlite-11.1.1-black)](https://github.com/expo/expo/tree/main/packages/expo-sqlite)
 [![sqlite-android](https://img.shields.io/badge/requery/sqlite--android-3.41.1-black)](https://github.com/requery/sqlite-android)
 
+
+> [!IMPORTANT]
+> This package will become useless once Expo SDK 50 is released.
+> The new SDK introduces changes to their official `expo-sqlite` and they upgraded to a more recent SQLite version that will support JSON function such as `json_extract`.
+
+
 Implements the original [expo-sqlite](https://github.com/expo/expo/tree/main/packages/expo-sqlite) with an updated version of android.database.sqlite from [requery.sqlite-android](https://github.com/requery/sqlite-android) which adds support for:
 
 - JSON1 extension
