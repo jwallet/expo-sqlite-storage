@@ -1,7 +1,7 @@
 import {
   getRxStorageSQLite,
   getSQLiteBasicsExpoSQLite,
-} from "@guay/rxdb-premium/plugins/storage-sqlite";
+} from "rxdb-premium/plugins/storage-sqlite";
 import * as ExpoSqliteStorage from "expo-sqlite-storage";
 import { RxStorage } from "rxdb";
 import { getRxStorageMemory } from "rxdb/plugins/storage-memory";
